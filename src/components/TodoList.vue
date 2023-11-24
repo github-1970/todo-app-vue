@@ -11,6 +11,7 @@
       :key="index"
       :id="todoItem.id"
       ref="itemRefs"
+      @dblclick="toggleSuccess(todoItem)"
     >
       <span class="flex-1 text-gray-800">{{ todoItem.text }}</span>
       <div class="flex space-x-2">
@@ -56,6 +57,8 @@ function toggleSuccess(todoItem) {
     }
   });
 }
+
+
 </script>
 
 <style scoped>
