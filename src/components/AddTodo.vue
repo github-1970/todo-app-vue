@@ -1,4 +1,5 @@
 <template>
+  <!-- Add todo item -->
   <div class="flex mb-4">
     <input
       @keydown.enter="addTodo"
@@ -19,7 +20,6 @@
 <script setup>
 import { ref, defineEmits } from "vue";
 import { generateUniqueID } from '/src/utils/helpers.js' 
-
 const emit = defineEmits(['addTodo'])
 const newTodo = ref('')
 
