@@ -11,9 +11,9 @@
       :key="index"
       :id="todoItem.id"
       ref="itemRefs"
-      @dblclick="toggleSuccess(todoItem)"
+      @dblclick="todoItem.success=!todoItem.success"
     >
-      <span class="flex-1 text-gray-800">{{ todoItem.text }}</span>
+      <span class="flex-1 text-gray-800" :class="todoItem.success ? 'line-through' : ''">{{ todoItem.text }}</span>
       <div class="flex space-x-2">
         <!-- Edit icon -->
         <!--  @click="openEditModal(todoItem)" -->
@@ -29,9 +29,9 @@
         <button
           class="text-green-500 hover:text-green-700"
           title="Success"
-          @click="toggleSuccess(todoItem)"
+          @click="todoItem.success=!todoItem.success"
         >
-          <i class="bx bx-check success-icon !hidden"></i>
+          <i class="bx bx-check success-icon" v-if="todoItem.success"></i>
           <i class="bx bx-check"></i>
         </button>
       </div>
@@ -46,18 +46,8 @@ const todoList = ref([]);
 const itemRefs = ref(null);
 
 function addTodo(data) {
-  todoList.value.push(data);
+  todoList.value.unshift(data);
 }
-
-function toggleSuccess(todoItem) {
-  itemRefs.value.forEach((itemRef) => {
-    if (itemRef.id == todoItem.id) {
-      itemRef.classList.toggle("line-through");
-      itemRef.querySelector('i.success-icon').classList.toggle('!hidden')
-    }
-  });
-}
-
 
 </script>
 
