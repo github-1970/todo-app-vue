@@ -1,6 +1,7 @@
 <template>
   <div class="flex mb-4">
     <input
+      @keydown.enter="addTodo"
       v-model="newTodo"
       type="text"
       placeholder="Add a new todo item"
@@ -23,7 +24,6 @@ const emit = defineEmits(['addTodo'])
 const newTodo = ref('')
 
 function addTodo() {
-  // console.log(newTodo.value)
   if(!newTodo.value.trim()) return
   emit('addTodo', {text: newTodo.value, id: generateUniqueID(), createdAt: Date.now()})
   newTodo.value = ''

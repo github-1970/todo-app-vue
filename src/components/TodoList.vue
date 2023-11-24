@@ -8,9 +8,8 @@
 <script setup>
 import AddTodo from '@/components/AddTodo.vue';
 import { ref } from 'vue'
-import { generateUniqueID } from '/src/utils/helpers.js' 
 
-const todoList = ref([{text: 'test', id: generateUniqueID(), createdAt: Date.now()}]);
+const todoList = ref([]);
 
 function addTodo(data) {
   todoList.value.push(data)
