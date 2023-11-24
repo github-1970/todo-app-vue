@@ -30,6 +30,7 @@
           title="Success"
           @click="toggleSuccess(todoItem)"
         >
+          <i class="bx bx-check success-icon !hidden"></i>
           <i class="bx bx-check"></i>
         </button>
       </div>
@@ -51,7 +52,14 @@ function toggleSuccess(todoItem) {
   itemRefs.value.forEach((itemRef) => {
     if (itemRef.id == todoItem.id) {
       itemRef.classList.toggle("line-through");
+      itemRef.querySelector('i.success-icon').classList.toggle('!hidden')
     }
   });
 }
 </script>
+
+<style scoped>
+.success-icon {
+  margin-right: -.5rem;
+}
+</style>
