@@ -1,10 +1,11 @@
 <template>
-  {{ msg }}
+  <TodoList />
 </template>
 
 <script setup>
-import { ref } from 'vue'
-const msg = ref('Home')
+import TodoList from '@/components/TodoList.vue';
+// import { ref } from 'vue'
+
 </script>
 
 <style>

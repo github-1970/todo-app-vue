@@ -1,0 +1,31 @@
+<template>
+  <div class="flex mb-4">
+    <input
+      v-model="newTodo"
+      type="text"
+      placeholder="Add a new todo item"
+      class="flex-1 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button
+      @click="addTodo"
+      class="bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      Add
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { ref, defineEmits } from "vue";
+import { generateUniqueID } from '/src/utils/helpers.js' 
+
+const emit = defineEmits(['addTodo'])
+const newTodo = ref('')
+
+function addTodo() {
+  // console.log(newTodo.value)
+  if(!newTodo.value.trim()) return
+  emit('addTodo', {text: newTodo.value, id: generateUniqueID(), createdAt: Date.now()})
+  newTodo.value = ''
+}
+</script>
