@@ -1,7 +1,7 @@
 <template>
   <div class="relative inline-block">
     <select
-        class="block appearance-none bg-gray-100 border border-gray-200 text-gray-700 py-1 pl-4 rounded-lg shadow-sm focus:outline-none focus:bg-white focus:border-gray-500"
+        class="block appearance-none bg-gray-100 border border-gray-200 text-gray-700 py-1 pl-2 pr-4 rounded-lg shadow-sm focus:outline-none focus:bg-white focus:border-gray-500"
         @change="filterTodo($event.target.value)"
     >
       <option
@@ -11,7 +11,7 @@
       >{{ filterOption.toUpperCase() }}
       </option>
     </select>
-    <div class="absolute right-0 top-[.6rem] flex items-center px-2 pointer-events-none">
+    <div class="absolute right-0 top-[.6rem] flex items-center px-1 pointer-events-none">
       <i class="bx bx-chevron-down"></i>
     </div>
   </div>

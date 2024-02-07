@@ -7,11 +7,10 @@
     <div class="flex items-center justify-between mb-4">
       <div class="relative">
         <i class="bx bx-search text-xl text-gray-300 absolute left-1 top-[.43rem]"></i>
-
         <input
             v-model="searchItem"
             type="text"
-            placeholder="Search for desired items"
+            placeholder="Search items..."
             class="flex-1 rounded-lg pr-2 pl-6 py-1 focus:outline-none focus:ring-2 ring-inset focus:ring-blue-500"
         />
       </div>
