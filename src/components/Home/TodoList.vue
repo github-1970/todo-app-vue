@@ -17,29 +17,35 @@
       >
         <div class="flex items-center justify-between" v-if="todoItem.inEdit">
           <input
-              class="bg-white bg-opacity-50 rounded-l-lg px-4 py-2 w-full"
+              class="bg-white bg-opacity-50 rounded-l-lg px-4 py-2 w-full focus:outline-none"
               v-model="todoItem.text"
               autofocus
           >
           <button
-              class="bg-green-500 text-white px-4 py-2 rounded-r-lg hover:bg-green-600 focus:outline-none focus:ring-2 ring-inset focus:ring-green-500"
-              @click="onEdit(todoItem)"
+              class="text-green-600 bg-white bg-opacity-50 p-2 hover:text-green-500"
+              @click="onUpdate(todoItem)"
           >
-            Edit
+            <i class="bx bx-edit"></i>
+          </button>
+          <button
+              class="text-red-500 bg-white bg-opacity-50 p-2 hover:text-red-700 rounded-r-lg"
+              @click="onCancel(todoItem)"
+          >
+            <i class="bx bx-x-circle"></i>
           </button>
         </div>
 
         <div class="flex items-center justify-between bg-white bg-opacity-50 rounded-lg px-4 py-2" v-if="!todoItem.inEdit">
           <span
-              class="flex-1 text-gray-800"
+              class="flex-1 text-gray-800 break-all"
               :class="todoItem.success ? 'line-through' : ''"
           >
-            <span @dblclick.stop="todoItem.inEdit = true">{{ todoItem.text }}</span>
+            <span @dblclick.stop="onEdit(todoItem)">{{ todoItem.text }}</span>
           </span>
           <div class="flex space-x-2">
             <!-- Edit icon -->
             <!--  @click="openEditModal(todoItem)" -->
-            <button class="text-blue-500 hover:text-blue-700" title="Edit" @click="todoItem.inEdit = true">
+            <button class="text-blue-500 hover:text-blue-700" title="Edit" @click="onEdit(todoItem)">
               <i class="bx bx-edit-alt"></i>
             </button>
             <!-- Delete icon -->
@@ -56,8 +62,8 @@
                 title="Success"
                 @click="todoItem.success = !todoItem.success"
             >
-              <i class="bx bx-check success-icon" v-if="todoItem.success"></i>
-              <i class="bx bx-check"></i>
+              <i class="bx bx-check success-icon" v-if="!todoItem.success"></i>
+              <i class="bx bx-check-double success-icon" v-if="todoItem.success"></i>
             </button>
           </div>
         </div>
@@ -101,9 +107,19 @@ function deleteTodoItem() {
   closeDeleteModal()
 }
 
-function onEdit(todoItem) {
+function onUpdate(todoItem) {
   todoItem.inEdit = false
   todoItem.text = todoItem.text.trim()
+}
+
+function onEdit(todoItem) {
+  todoItem.inEdit = true
+  todoItem.fomerText = todoItem.text
+}
+
+function onCancel(todoItem) {
+  todoItem.inEdit = false
+  todoItem.text = todoItem.fomerText
 }
 </script>
 
