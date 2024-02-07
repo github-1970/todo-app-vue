@@ -17,9 +17,8 @@
       >
         <div class="flex items-center justify-between" v-if="todoItem.inEdit">
           <input
-              class="bg-white bg-opacity-50 rounded-l-lg px-4 py-2 w-full focus:outline-none"
+              class="bg-white rounded-l-lg px-4 py-2 w-full focus:outline-none"
               v-model="todoItem.text"
-              autofocus
           >
           <button
               class="text-green-600 bg-white bg-opacity-50 p-2 hover:text-green-500"
@@ -37,7 +36,7 @@
 
         <div class="flex items-center justify-between bg-white bg-opacity-50 rounded-lg px-4 py-2" v-if="!todoItem.inEdit">
           <span
-              class="flex-1 text-gray-800 break-all"
+              class="flex-1 text-gray-800 break-all select-none"
               :class="todoItem.success ? 'line-through' : ''"
           >
             <span @dblclick.stop="onEdit(todoItem)">{{ todoItem.text }}</span>
