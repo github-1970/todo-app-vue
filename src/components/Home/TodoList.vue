@@ -4,7 +4,20 @@
   >
     <h1 class="text-2xl font-bold mb-4 text-center text-white">Todo List</h1>
 
-    <FilterTodo @on-filter="doFilter" />
+    <div class="flex items-center justify-between mb-4">
+      <div class="relative">
+        <i class="bx bx-search text-xl text-gray-300 absolute left-1 top-[.43rem]"></i>
+
+        <input
+            v-model="searchItem"
+            type="text"
+            placeholder="Search for desired items"
+            class="flex-1 rounded-lg pr-2 pl-6 py-1 focus:outline-none focus:ring-2 ring-inset focus:ring-blue-500"
+        />
+      </div>
+
+      <FilterTodo @on-filter="doFilter" />
+    </div>
 
     <AddTodo @add-todo="addTodo"/>
 
@@ -91,6 +104,7 @@ const todoList = ref([])
 const itemRefs = ref(null)
 const selectedTodoItem = ref(null)
 const filterOption = ref('all')
+const searchItem = ref('')
 
 function addTodo(data) {
   todoList.value.unshift(data)
@@ -131,12 +145,19 @@ function doFilter(filter) {
 }
 
 function filteredTodo() {
+  const searchedTodo = searchTodo()
+
   if (filterOption.value === 'all')
-    return todoList.value
+    return searchedTodo
   if (filterOption.value === 'active')
-    return todoList.value.filter(item => !item.completed)
+    return searchedTodo.filter(item => !item.completed)
   if (filterOption.value === 'completed')
-    return todoList.value.filter(item => item.completed)
+    return searchedTodo.filter(item => item.completed)
+}
+
+function searchTodo() {
+  const searchRegex = new RegExp(searchItem.value, 'i');
+  return searchItem.value !== '' ? todoList.value.filter(item =>searchRegex.test(item.text)) : todoList.value
 }
 </script>
 
