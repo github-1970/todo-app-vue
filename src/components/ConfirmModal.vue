@@ -10,6 +10,8 @@
       <div class="flex justify-end">
         <button
             @click="emit('confirm')"
+            @keydown.enter="emit('confirm')"
+            ref="confirmBtn"
             class="bg-red-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-red-600"
         >
           Delete
@@ -26,7 +28,11 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue"
+import {defineProps, defineEmits, ref, onMounted} from "vue"
+
 const props = defineProps(['message'])
 const emit = defineEmits(['confirm', 'closeDeleteModal'])
+const confirmBtn = ref(null)
+
+onMounted(() => confirmBtn.value.focus())
 </script>
