@@ -3,17 +3,20 @@
       class="max-w-md w-full p-6 bg-white bg-opacity-20 backdrop-blur-md rounded-lg"
   >
     <h1 class="text-2xl font-bold mb-4 text-center text-white">Todo List</h1>
+
+    <FilterTodo @on-filter="doFilter" />
+
     <AddTodo @add-todo="addTodo"/>
 
     <!-- Todo list -->
     <div class="space-y-4">
       <!-- Single todo item -->
       <div
-          v-for="(todoItem, index) in todoList"
+          v-for="(todoItem, index) in filteredTodo()"
           :key="index"
           :id="todoItem.id"
           ref="itemRefs"
-          @dblclick="todoItem.success = !todoItem.success"
+          @dblclick="todoItem.completed = !todoItem.completed"
       >
         <div class="flex items-center justify-between" v-if="todoItem.inEdit">
           <input
@@ -37,7 +40,7 @@
         <div class="flex items-center justify-between bg-white bg-opacity-50 rounded-lg px-4 py-2" v-if="!todoItem.inEdit">
           <span
               class="flex-1 text-gray-800 break-all select-none"
-              :class="todoItem.success ? 'line-through' : ''"
+              :class="todoItem.completed ? 'line-through' : ''"
           >
             <span @dblclick.stop="onEdit(todoItem)">{{ todoItem.text }}</span>
           </span>
@@ -55,14 +58,14 @@
             >
               <i class="bx bx-trash"></i>
             </button>
-            <!-- Success/Unsuccess button -->
+            <!-- completed/Uncompleted button -->
             <button
                 class="text-green-500 hover:text-green-700"
-                title="Success"
-                @click="todoItem.success = !todoItem.success"
+                title="completed"
+                @click="todoItem.completed = !todoItem.completed"
             >
-              <i class="bx bx-check success-icon" v-if="!todoItem.success"></i>
-              <i class="bx bx-check-double success-icon" v-if="todoItem.success"></i>
+              <i class="bx bx-check completed-icon" v-if="!todoItem.completed"></i>
+              <i class="bx bx-check-double completed-icon" v-if="todoItem.completed"></i>
             </button>
           </div>
         </div>
@@ -81,11 +84,13 @@
 <script setup>
 import AddTodo from "@/components/Home/AddTodo.vue"
 import ConfirmModal from "@/components/ConfirmModal.vue"
+import FilterTodo from "@/components/Home/FilterTodo.vue"
 import {ref} from "vue"
 
 const todoList = ref([])
 const itemRefs = ref(null)
 const selectedTodoItem = ref(null)
+const filterOption = ref('all')
 
 function addTodo(data) {
   todoList.value.unshift(data)
@@ -120,10 +125,23 @@ function onCancel(todoItem) {
   todoItem.inEdit = false
   todoItem.text = todoItem.fomerText
 }
+
+function doFilter(filter) {
+  filterOption.value = filter
+}
+
+function filteredTodo() {
+  if (filterOption.value === 'all')
+    return todoList.value
+  if (filterOption.value === 'active')
+    return todoList.value.filter(item => !item.completed)
+  if (filterOption.value === 'completed')
+    return todoList.value.filter(item => item.completed)
+}
 </script>
 
 <style scoped>
-.success-icon {
+.completed-icon {
   margin-right: -0.5rem;
 }
 </style>
